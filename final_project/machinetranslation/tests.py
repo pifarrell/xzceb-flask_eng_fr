@@ -8,6 +8,9 @@ class TestTranslator(unittest.TestCase):
     def test_englishToFrench_basic(self):
         self.assertEqual(ts.english_to_french('Hello'), 'Bonjour')
 
+    def test_englishToFrench_basicFail(self):
+        self.assertNotEqual(ts.english_to_french('Hello'), 'Hello')
+
     def test_englishToFrench_null(self):
         self.assertIsNone(ts.english_to_french(None))
 
@@ -16,6 +19,9 @@ class TestTranslator(unittest.TestCase):
     
     def test_frenchToEnglish_basic(self):
         self.assertEqual(ts.french_to_english('Bonjour'), 'Hello')
+
+    def test_frenchToEnglish_basicFail(self):
+        self.assertNotEqual(ts.french_to_english('Bonjour'), 'Bonjour')
 
     def test_frenchToEnglish_null(self):
         self.assertIsNone(ts.french_to_english(None))
