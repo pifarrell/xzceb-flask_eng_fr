@@ -1,5 +1,5 @@
 """
-Simple EN-FR and FR-EN translator methods
+Simple EN-FR and FR-EN translator methods using IBM's Watson Language Translator
 """
 import os
 from ibm_watson import LanguageTranslatorV3, ApiException
@@ -11,6 +11,7 @@ load_dotenv()
 apikey = os.environ['apikey']
 url = os.environ['url']
 
+# Create instance of the language translator from the .env fields
 auth =IAMAuthenticator(apikey)
 translator = LanguageTranslatorV3(
     version='2018-05-01',
@@ -19,7 +20,7 @@ translator = LanguageTranslatorV3(
 
 translator.set_service_url(url)
 
-def english_to_french(english_text):
+def english_to_french(english_text: str) -> str:
     """ Translate given english text to french
     """
     if english_text is not None and len(english_text) > 0:
@@ -27,14 +28,17 @@ def english_to_french(english_text):
             translations = translator.translate(
                 text=english_text,
                 model_id='en-fr').get_result()
+
+            # Extract text translation from JSON return object and return it
             return translations['translations'][0]['translation']
+
         except ApiException as ex:
             print(f'Couldn\'t translate text: {english_text}\n\t{ex.message}')
 
     return english_text
 
 
-def french_to_english(french_text):
+def french_to_english(french_text: str) -> str:
     """ Translate given french text to english
     """
 
@@ -43,7 +47,10 @@ def french_to_english(french_text):
             translations = translator.translate(
                 text=french_text,
                 model_id='fr-en').get_result()
+
+            # Same format as EN-FR return
             return translations['translations'][0]['translation']
+
         except ApiException as ex:
             print(f'Couldn\'t translate text: {french_text}\n\t{ex.message}')
 
